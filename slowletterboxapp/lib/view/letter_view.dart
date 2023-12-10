@@ -28,6 +28,7 @@ class _LetterViewState extends State<LetterView> {
                 child: Item(
                   date: letterList[index].date,
                   title: letterList[index].title,
+                  contents: letterList[index].contents,
                 ));
           });
     });

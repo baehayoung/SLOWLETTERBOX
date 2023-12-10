@@ -2,13 +2,13 @@ class Letter {
   int id;
   int date;
   String title;
-  String? contents;
+  String contents;
 
   Letter(
       {required this.id,
       required this.date,
       required this.title,
-      this.contents});
+      required this.contents});
 
   factory Letter.fromJson(Map<String, dynamic> json) {
     return Letter(
