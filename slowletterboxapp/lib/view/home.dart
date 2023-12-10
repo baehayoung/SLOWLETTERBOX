@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:slowletterboxapp/view/write_view.dart';
+import 'package:slowletterboxapp/view/letter_view.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -24,7 +25,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(() => setState(() {
           _selectedIdx = _tabController.index;
         }));
@@ -61,6 +62,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 )
               ]),
         ),
-        body: _selectedIdx == 0 ? tabContainer(context, "사서함") : WriteView());
+        body: _selectedIdx == 0 ? LetterView() : WriteView());
   }
 }

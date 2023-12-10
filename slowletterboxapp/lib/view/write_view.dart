@@ -36,7 +36,7 @@ class _WriteState extends State<WriteView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         width: MediaQuery.of(context).size.width,
         height: double.infinity,
         child: Column(

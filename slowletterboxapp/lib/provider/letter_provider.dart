@@ -14,11 +14,11 @@ class LetterProvider with ChangeNotifier {
   void _fetchLetter() async {
     final response = await rootBundle.loadString('assets/data/letterList.json');
     final data = await json
-        .decode(response)
-        .map<Letter>((json) => Letter.fromJson(json))
+        .decode(response)['letter']
+        .map<Letter>((item) => Letter.fromJson(item))
         .toList();
     _letterList.clear();
     _letterList.addAll(data);
-    notifyListeners();
+    // notifyListeners();
   }
 }
