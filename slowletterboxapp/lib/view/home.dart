@@ -41,7 +41,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("SLOW LETTER BOX"),
+          title: const Text("SLOW LETTER BOX"),
         ),
         bottomNavigationBar: SizedBox(
           height: 50,
