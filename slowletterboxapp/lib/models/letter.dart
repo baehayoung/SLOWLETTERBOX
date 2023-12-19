@@ -5,7 +5,7 @@ class Letter {
   String contents;
 
   Letter(
-      {required this.id,
+      {this.id = -1,
       required this.date,
       required this.title,
       required this.contents});

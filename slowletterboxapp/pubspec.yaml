@@ -34,7 +34,7 @@ dependencies:
   http:
   provider:
   intl:
-  sqflite: 
+  sqflite:
 
 dev_dependencies:
   flutter_test:

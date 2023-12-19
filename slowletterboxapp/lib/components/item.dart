@@ -2,15 +2,19 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
 class Item extends StatelessWidget {
+  int id;
   int date;
   String title;
   String contents;
+  Function deleteFunc;
 
   Item(
       {super.key,
+      required this.id,
       required this.date,
       required this.title,
-      required this.contents});
+      required this.contents,
+      required this.deleteFunc});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +32,13 @@ class Item extends StatelessWidget {
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          child: const Text('확인'))
+                          child: const Text('확인')),
+                      TextButton(
+                          onPressed: () async {
+                            deleteFunc();
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('삭제'))
                     ]);
               });
         },
@@ -57,7 +67,7 @@ class Item extends StatelessWidget {
               width: 15,
             ),
             Text(DateFormat('yyyy-MM-dd hh:mm')
-                .format(DateTime.fromMillisecondsSinceEpoch(date * 1000)))
+                .format(DateTime.fromMillisecondsSinceEpoch(date)))
           ],
         ));
   }

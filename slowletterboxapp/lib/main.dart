@@ -19,9 +19,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: MultiProvider(providers: [
-        ChangeNotifierProvider(
-            create: (BuildContext context) => LetterProvider())
-      ], child: Home()),
+        ChangeNotifierProvider(create: (BuildContext context) => TabProvider())
+      ], child: const Home()),
     );
   }
 }

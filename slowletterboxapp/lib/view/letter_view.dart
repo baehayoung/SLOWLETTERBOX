@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:slowletterboxapp/components/item.dart';
+import 'package:slowletterboxapp/service/database.dart';
 import 'package:slowletterboxapp/provider/letter_provider.dart';
 
 import '../models/letter.dart';
@@ -14,15 +15,39 @@ class LetterView extends StatefulWidget {
 }
 
 class _LetterViewState extends State<LetterView> {
-  late List<Letter> letterList;
+  final DBHelper _dbHelper = DBHelper();
+
+  List<Letter> letterList = [];
   DateTime startDate = DateTime.now().subtract(const Duration(days: 30));
   DateTime endDate = DateTime.now();
 
+  Future _getLetter() async {
+    List<Letter> _letters = await _dbHelper.getDB(
+        startDate.millisecondsSinceEpoch, endDate.millisecondsSinceEpoch);
+    setState(() {
+      letterList = _letters;
+    });
+    // await _dbHelper.executeSQL();
+  }
+
+  void _deleteLetter(id) async {
+    await _dbHelper.deleteDB(id);
+    List<Letter> _letters = await _dbHelper.getDB(
+        startDate.millisecondsSinceEpoch, endDate.millisecondsSinceEpoch);
+    setState(() {
+      letterList = _letters;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getLetter();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Consumer<LetterProvider>(builder: (context, provider, child) {
-      letterList = provider.getLetterList();
-
+    return Consumer<TabProvider>(builder: (context, provider, child) {
       return Column(
         children: [
           Row(
@@ -67,7 +92,7 @@ class _LetterViewState extends State<LetterView> {
                   ),
                   child: Text(DateFormat('yyyy-MM-dd').format(endDate))),
               IconButton(
-                onPressed: () => {print("clcik")},
+                onPressed: () => {_getLetter()},
                 icon: const Icon(Icons.search),
               )
             ],
@@ -79,9 +104,12 @@ class _LetterViewState extends State<LetterView> {
                     return Container(
                         padding: const EdgeInsets.all(15),
                         child: Item(
+                          id: letterList[index].id,
                           date: letterList[index].date,
                           title: letterList[index].title,
                           contents: letterList[index].contents,
+                          deleteFunc: () =>
+                              {_deleteLetter(letterList[index].id)},
                         ));
                   }))
         ],

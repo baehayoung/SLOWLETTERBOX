@@ -22,3 +22,13 @@ class LetterProvider with ChangeNotifier {
     // notifyListeners();
   }
 }
+
+class TabProvider with ChangeNotifier {
+  int _selectedIdx = 0;
+  int get selectedIdx => _selectedIdx;
+
+  void setTabIdx(int idx) {
+    _selectedIdx = idx;
+    notifyListeners();
+  }
+}

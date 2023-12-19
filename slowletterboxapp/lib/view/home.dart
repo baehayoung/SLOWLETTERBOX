@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:slowletterboxapp/view/write_view.dart';
 import 'package:slowletterboxapp/view/letter_view.dart';
+import 'package:slowletterboxapp/provider/letter_provider.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -20,14 +22,14 @@ Container tabContainer(BuildContext context, String tabText) {
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  int _selectedIdx = 0;
+  TabProvider? _tabProvider;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(() => setState(() {
-          _selectedIdx = _tabController.index;
+          _tabProvider?.setTabIdx(_tabController.index);
         }));
   }
 
@@ -39,6 +41,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    _tabProvider = Provider.of<TabProvider>(context);
+
     return Scaffold(
         appBar: AppBar(
           title: const Text("SLOW LETTER BOX"),
@@ -51,17 +55,19 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               controller: _tabController,
               tabs: <Widget>[
                 Tab(
-                  icon: Icon(_selectedIdx == 0
+                  icon: Icon(_tabProvider?.selectedIdx == 0
                       ? Icons.mail_rounded
                       : Icons.mail_outline),
                 ),
                 Tab(
-                  icon: Icon(_selectedIdx == 1
+                  icon: Icon(_tabProvider?.selectedIdx == 1
                       ? Icons.edit_rounded
                       : Icons.edit_outlined),
                 )
               ]),
         ),
-        body: _selectedIdx == 0 ? LetterView() : WriteView());
+        body: _tabProvider?.selectedIdx == 0
+            ? const LetterView()
+            : const WriteView());
   }
 }
