@@ -45,6 +45,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: const Text("SLOW LETTER BOX"),
         ),
         bottomNavigationBar: SizedBox(
